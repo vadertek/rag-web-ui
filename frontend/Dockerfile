@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile --prefer-frozen-lockfile
 # Builder
 FROM base AS builder
 
-RUN npm install -g pnpm@8
+RUN npm install -g pnpm@9
 
 WORKDIR /app
 
