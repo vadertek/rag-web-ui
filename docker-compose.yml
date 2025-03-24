@@ -31,16 +31,17 @@ services:
       - app_network
 
   db:
-    image: mysql:8.0
+    image: mysql:8.0-debian
     command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=ragwebui
       - MYSQL_USER=ragwebui
-      - MYSQL_PASSWORD=ragwebui
+      - MYSQL_PASSWORD=S25sLPk3vbFcB6xM4HRTpa
       - TZ=Asia/Shanghai
-    ports:
-      - "3306:3306"
+      # ports:
+      # - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -57,15 +58,15 @@ services:
           "$$MYSQL_USER",
           "--password=$$MYSQL_PASSWORD",
         ]
-      interval: 5s
+
       timeout: 5s
       retries: 5
       start_period: 10s
 
   chromadb:
     image: chromadb/chroma:latest
-    ports:
-      - "8001:8000"
+    #ports:
+    # - "8001:8000"
     volumes:
       - chroma_data:/chroma/chroma
     networks:
@@ -86,9 +87,9 @@ services:
 
   minio:
     image: minio/minio:latest
-    ports:
-      - "9000:9000" # API port
-      - "9001:9001" # Console port
+    #ports:
+    # - "9000:9000" # API port
+    # - "9001:9001" # Console port
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
