@@ -349,7 +349,7 @@ def generate_response_sync(
         db.commit()
         if isinstance(full_response, dict):
             formatted_response = re.sub(r'\[citation:(\d+)\]', '', full_response["answer"])
-            formatted_response = formatted_response.replace('\n', '').replace(' .', '. ').replace(' ,', ', ')
+            formatted_response = formatted_response.replace('\n', ' ').replace('  ', ' ').replace(' .', '. ').replace(' ,', ', ').replace('*', '')
             return formatted_response
         else: 
             return full_response
