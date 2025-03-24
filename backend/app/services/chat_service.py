@@ -348,7 +348,7 @@ def generate_response_sync(
         bot_message.content = full_response["answer"] if isinstance(full_response, dict) else full_response
         db.commit()
         if isinstance(full_response, dict):
-            formatted_response = re.sub(r'\[citation:(\d+)\]', '', full_response["answer"])
+            formatted_response = re.sub(r'\[citation:(\d+)\]|\[\d+\]', '', full_response["answer"])
             formatted_response = (formatted_response
                 .replace('\n', ' ')
                 .replace('  ', ' ')
