@@ -367,5 +367,6 @@ def generate_response_sync(
         if 'bot_message' in locals():
             bot_message.content = error_message
             db.commit()
+        return error_message
     finally:
         db.close()
