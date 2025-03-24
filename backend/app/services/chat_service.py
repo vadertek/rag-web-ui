@@ -349,7 +349,12 @@ def generate_response_sync(
         db.commit()
         if isinstance(full_response, dict):
             formatted_response = re.sub(r'\[citation:(\d+)\]', '', full_response["answer"])
-            formatted_response = formatted_response.replace('\n', '').replace(' .', '. ').replace(' ,', ', ')
+            formatted_response = (formatted_response
+                .replace('\n', ' ')
+                .replace('  ', ' ')
+                .replace(' .', '. ')
+                .replace(' ,', ', ')
+                .replace('*', ''))
             return formatted_response
         else: 
             return full_response
@@ -362,5 +367,6 @@ def generate_response_sync(
         if 'bot_message' in locals():
             bot_message.content = error_message
             db.commit()
+        return error_message
     finally:
         db.close()
