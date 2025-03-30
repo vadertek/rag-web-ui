@@ -108,22 +108,18 @@ async def generate_response(
 
         # Create QA prompt
         qa_system_prompt = (
-            "You are given a user question, and please write a clean, concise, and accurate answer to the question. "
-            "You will be given a set of related contexts to the question, which are numbered sequentially starting from 1. "
-            "Each context has an implicit reference number based on its position in the array (first context is 1, second is 2, etc.). "
-            "Please use these contexts and cite them using the format [citation:x] at the end of each sentence where applicable. "
-            "Your answer must be correct, accurate, and written by an expert using an unbiased and professional tone. "
-            "Please limit your response to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. "
-            "Say 'information is missing on' followed by the related topic, if the given contexts do not provide sufficient information. "
-            "If a sentence draws from multiple contexts, list all applicable citations, like [citation:1][citation:2]. "
-            "Other than code, specific names, and citations, your answer must be written in the same language as the question. "
-            "Be concise. \n\nContext: {context}\n\n"
-            "Important: If the context contains the name of a specific product relevant to the question (e.g., a shampoo for washing dogs), "
-            "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
-            "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
-            "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
-            "If the question is asked in Ukranian, use translations for Product names in your answer below:"
-            "\n\nPRODUCT TRANSLATIONS DICTIONARY:\n"
+            "You are given a user question and a set of related contexts. Your task is to write a clean, concise, and accurate answer, "
+            "written by an expert in an unbiased and professional tone. The contexts are numbered in order, starting from 1. "
+            "Cite sources using the format [citation:x] at the end of each relevant sentence, where x refers to the context number. "
+            "If a sentence is based on multiple contexts, cite all relevant ones (e.g., [citation:1][citation:2]).\n\n"
+            "Only include information supported by the provided contexts. If information is missing, write 'information is missing on' followed by the topic. "
+            "Do not repeat context verbatim. Limit your response to 1024 tokens. Do not include unrelated details.\n\n"
+            "Context: {context}\n\n"
+            "Important:\n"
+            "- Your answer must be written in the same language as the question (Ukrainian, English, etc.), including product names where applicable.\n"
+            "- If the question is in Ukrainian, use the Ukrainian translations from the product dictionary below when referring to TropiClean products.\n"
+            "- Always include the product name when relevant, explain its usefulness, and cite the source context.\n"
+            "PRODUCT TRANSLATIONS DICTIONARY:\n"
             "Oral Care Gels:\n"
             "• TropiClean Fresh Breath Oral Care Brushing Gel for Dogs → Тропіклеан Чудернадський Гель для циркової собаки\n"
             "• TropiClean Fresh Breath Oral Care Gel for Dogs → Тропіклеан Освіжаючий Гель для псів з диханням дракона\n"
@@ -138,9 +134,9 @@ async def generate_response(
             "• TropiClean Lime & Coconut Shed Control Shampoo → Тропіклеан Шампунь проти линьки для пухнастиків, що засмічують пилосос\n"
             "• TropiClean Neem & Citrus Flea & Tick Relief Shampoo for Dogs → Тропіклеан Цитрусовий Антиблошиний Шампунь для псів-вояків\n"
             "• TropiClean Oatmeal & Tea Tree Medicated Itch Relief Shampoo → Тропіклеан Вівсяний Шампунь для чухачів зі стажем\n\n"
-            "When answering in Ukrainian, use the Ukrainian product names from this dictionary instead of the English ones.\n"
-
+            "Note: Apply translations only if the user question is in Ukrainian."
         )
+
         qa_prompt = ChatPromptTemplate.from_messages([
             ("system", qa_system_prompt),
             MessagesPlaceholder("chat_history"),
