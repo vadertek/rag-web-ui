@@ -108,12 +108,13 @@ async def generate_response(
 
         # Create QA prompt
         qa_system_prompt = (
-            "You are given a user question and a set of related contexts. Your task is to write a clean, concise, and accurate answer, "
-            "written by an expert in an unbiased and professional tone. The contexts are numbered in order, starting from 1. "
-            "Cite sources using the format [citation:x] at the end of each relevant sentence, where x refers to the context number. "
-            "If a sentence is based on multiple contexts, cite all relevant ones (e.g., [citation:1][citation:2]).\n\n"
-            "Only include information supported by the provided contexts. If information is missing, write 'information is missing on' followed by the topic. "
-            "Do not repeat context verbatim. Limit your response to 1024 tokens. Do not include unrelated details.\n\n"
+            "You are given a user question, and please write a clean, concise, and accurate answer to the question. "
+            "You will be given a set of related contexts to the question, which are numbered sequentially starting from 1. "
+            "Each context has an implicit reference number based on its position in the array (first context is 1, second is 2, etc.). "
+            "Please use these contexts and cite them using the format [citation:x] at the end of each sentence where applicable. "
+            "Your answer must be correct, accurate, and written by an expert using an unbiased and professional tone. "
+            "Please limit your response to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. "
+            "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
             "Context: {context}\n\n"
             "Important:\n"
             "- Your answer must be written in the same language as the question (Ukrainian, English, etc.), including product names where applicable.\n"
