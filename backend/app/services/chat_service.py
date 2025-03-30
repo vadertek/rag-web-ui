@@ -90,7 +90,6 @@ async def generate_response(
             "formulate a standalone question which can be understood "
             "without the chat history. Do NOT answer the question, just "
             "reformulate it if needed and otherwise return it as is."
-            "If question is asked in Ukranian, add PRODUCT-UA-EN-TRANSLATION-20838a8df key in the end of the question."
         )
         contextualize_q_prompt = ChatPromptTemplate.from_messages([
             ("system", contextualize_q_system_prompt),
@@ -123,7 +122,24 @@ async def generate_response(
             "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
             "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
             "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
-            "If the question is asked in Ukranian, use translations from PRODUCT-UA-EN-TRANSLATION-20838a8df and replace Product names with the given translations."
+            "If the question is asked in Ukranian, use translations for Product names in your answer below:",
+            "\n\nPRODUCT TRANSLATIONS DICTIONARY:\n"
+            "Oral Care Gels:\n"
+            "• TropiClean Fresh Breath Oral Care Brushing Gel for Dogs → Тропіклеан Чудернадський Гель для циркової собаки\n"
+            "• TropiClean Fresh Breath Oral Care Gel for Dogs → Тропіклеан Освіжаючий Гель для псів з диханням дракона\n"
+            "• TropiClean Fresh Breath Oral Care Gel for Cats → Тропіклеан Гель для котів, які дихають як трактор\n"
+            "• TropiClean Fresh Breath Oral Care Gel for Puppies → Тропіклеан Гель для щенят, що гризуть усе на світі\n"
+            "• TropiClean Fresh Breath Oral Care Gel for Dogs – Peanut Butter Flavor → Тропіклеан Арахісовий Гель для гурманів на чотирьох лапах\n\n"
+            "Shampoos:\n"
+            "• TropiClean Aloe & Coconut Deodorizing Shampoo → Тропіклеан Шампунь для псів із запахом пляжного курорту\n"
+            "• TropiClean Awapuhi & Coconut Whitening Shampoo → Тропіклеан Відбілюючий Шампунь для тих, хто хоче сяяти як лампочка\n"
+            "• TropiClean Berry & Coconut Deep Cleansing Shampoo → Тропіклеан Ягідно-Кокосовий Шампунь для найзаляпаніших хвостатих\n"
+            "• TropiClean Gentle Coconut Hypoallergenic Shampoo for Puppies & Kittens → Тропіклеан Ніжний Шампунь для пухнастиків, які нюхають усе підряд\n"
+            "• TropiClean Lime & Coconut Shed Control Shampoo → Тропіклеан Шампунь проти линьки для пухнастиків, що засмічують пилосос\n"
+            "• TropiClean Neem & Citrus Flea & Tick Relief Shampoo for Dogs → Тропіклеан Цитрусовий Антиблошиний Шампунь для псів-вояків\n"
+            "• TropiClean Oatmeal & Tea Tree Medicated Itch Relief Shampoo → Тропіклеан Вівсяний Шампунь для чухачів зі стажем\n\n"
+            "When answering in Ukrainian, use the Ukrainian product names from this dictionary instead of the English ones.\n"
+
         )
         qa_prompt = ChatPromptTemplate.from_messages([
             ("system", qa_system_prompt),
