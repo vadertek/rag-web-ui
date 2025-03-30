@@ -122,7 +122,7 @@ async def generate_response(
             "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
             "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
             "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
-            "If the question is asked in Ukranian, use translations for Product names in your answer below:",
+            "If the question is asked in Ukranian, use translations for Product names in your answer below:"
             "\n\nPRODUCT TRANSLATIONS DICTIONARY:\n"
             "Oral Care Gels:\n"
             "• TropiClean Fresh Breath Oral Care Brushing Gel for Dogs → Тропіклеан Чудернадський Гель для циркової собаки\n"
