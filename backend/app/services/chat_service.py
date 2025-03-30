@@ -90,6 +90,7 @@ async def generate_response(
             "formulate a standalone question which can be understood "
             "without the chat history. Do NOT answer the question, just "
             "reformulate it if needed and otherwise return it as is."
+            "If question is asked in Ukranian, add PRODUCT-UA-EN-TRANSLATION-20838a8df key in the end of the question."
         )
         contextualize_q_prompt = ChatPromptTemplate.from_messages([
             ("system", contextualize_q_system_prompt),
@@ -103,6 +104,8 @@ async def generate_response(
             retriever,
             contextualize_q_prompt
         )
+
+        print("contextualize_q_prompt:", contextualize_q_prompt)
 
         # Create QA prompt
         qa_system_prompt = (
@@ -120,6 +123,7 @@ async def generate_response(
             "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
             "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
             "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
+            "If the question is asked in Ukranian, use translations from PRODUCT-UA-EN-TRANSLATION-20838a8df and replace Product names with the given translations."
         )
         qa_prompt = ChatPromptTemplate.from_messages([
             ("system", qa_system_prompt),
