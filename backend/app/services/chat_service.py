@@ -115,15 +115,14 @@ async def generate_response(
             "Please use these contexts and cite them using the format [citation:x] at the end of each sentence where applicable. "
             "Your answer must be correct, accurate, and written by an expert using an unbiased and professional tone. "
             "Please limit your response to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. "
-            "Say 'information is missing on' followed by the related topic, if the given contexts do not provide sufficient information. "
-            "If a sentence draws from multiple contexts, list all applicable citations, like [citation:1][citation:2]. "
-            "Other than code, specific names, and citations, your answer must be written in the same language as the question. "
-            "Be concise. \n\nContext: {context}\n\n"
-            "Important: If the context contains the name of a specific product relevant to the question (e.g., a shampoo for washing dogs), "
-            "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
-            "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
             "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
-            "If the question is asked in Ukranian, use translations from PRODUCT-UA-EN-TRANSLATION-20838a8df and replace Product names with the given translations."
+            "Context: {context}\n\n"
+            "Important:\n"
+            "- Your answer must be written in the same language as the user question (Ukrainian, English, etc.).\n"
+            "- If the question is in Ukrainian and the special context with tag 'PRODUCT-UA-EN-TRANSLATION-20838a8df' is included, "
+            "use the Ukrainian product names from that context when referring to TropiClean products.\n"
+            "- When a specific product is mentioned in the context and is relevant to the question, include the product name in the answer, "
+            "explain its use, and cite the source context.\n\n"
         )
         qa_prompt = ChatPromptTemplate.from_messages([
             ("system", qa_system_prompt),
