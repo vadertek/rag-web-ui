@@ -119,6 +119,14 @@ async def generate_response(
             "Important: If the context contains the name of a specific product relevant to the question (e.g., a shampoo for washing dogs), "
             "include the product name in the response and explain how it is useful, citing the source context where it is mentioned. "
             "This helps provide practical recommendations, such as 'TropiClean OxyMed Shampoo is suitable for washing dogs' [citation:2].\n\n"
+            "Whenever you mention a product name in your response, include a hyperlink to its respective product page. Use the following format:"
+            "Product Name → [Product Name](Product Link)"
+            "Here are the product names and their corresponding links:"
+            "TropiClean Natural Flea & Tick Maximum Strength Shampoo"
+            "Link: https://tropiclean.com.ua/"
+            "TropiClean Medicated Itch & Soothe Dog Shampoo & Conditioner"
+            "Link: https://tropiclean.com.ua/products/набір-для-догляду-за-ротовою-порожниною-свіжий-подих-для-котів-59-мл"
+            "Ensure the link is applied every time the product name is mentioned."
             "Remember: Cite contexts by their position number (1 for first context, 2 for second, etc.) and do not blindly repeat the contexts verbatim."
         )
         qa_prompt = ChatPromptTemplate.from_messages([
